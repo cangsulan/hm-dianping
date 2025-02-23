@@ -68,7 +68,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 
         // 4. 实现缓存重建
         // 4.1 获取互斥锁
-        String lockKey = "lo";
+        String lockKey = "lock:shop:"+id;
         Shop shop = null;
         try {
             boolean isLock = tryLock(lockKey);
@@ -131,7 +131,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
     // 加互斥锁
     private boolean tryLock(String key){
         Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(key, "1", 10, TimeUnit.SECONDS);
-        return BooleanUtil.isFalse(flag);
+        return BooleanUtil.isTrue(flag);
     }
 
     // 释放互斥锁
