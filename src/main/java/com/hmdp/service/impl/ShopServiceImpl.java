@@ -48,12 +48,12 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         //缓存穿透
         // Shop shop = queryWithPassThrough(id);
         // 用我们写好的工具类来解决缓存穿透
-        // Shop shop = cacheClient.queryWithPassThrough(CACHE_SHOP_KEY, id, Shop.class, this::getById, CACHE_SHOP_TTL, TimeUnit.MINUTES);
+        Shop shop = cacheClient.queryWithPassThrough(CACHE_SHOP_KEY, id, Shop.class, this::getById, CACHE_SHOP_TTL, TimeUnit.MINUTES);
 
         // 互斥锁 解决缓存击穿
         // Shop shop = queryWithMutex(id);
         // 用我们写好的工具类来解决
-        Shop shop = cacheClient.handleCacheBreakdownByLogicalExpire(CACHE_SHOP_KEY, id, Shop.class, LOCK_SHOP_KEY, this::getById, CACHE_SHOP_TTL, TimeUnit.SECONDS);
+        // Shop shop = cacheClient.handleCacheBreakdownByLogicalExpire(CACHE_SHOP_KEY, id, Shop.class, LOCK_SHOP_KEY, this::getById, CACHE_SHOP_TTL, TimeUnit.SECONDS);
 
         // 逻辑过期 解决缓存击穿
         // Shop shop = queryWithLogicalExpire(id);
