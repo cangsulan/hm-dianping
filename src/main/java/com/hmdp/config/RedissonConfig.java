@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author 30241
  * @version 1.0
- * @description: TODO
+ * @description:
  * @date 2025/2/26 下午6:06
  */
 @Configuration
